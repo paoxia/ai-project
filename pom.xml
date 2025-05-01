@@ -9,6 +9,7 @@
     <description>Demo ai-project project for Spring Boot</description>
     <modules>
         <module>ai-mcp</module>
+        <module>ai-vector-db</module>
     </modules>
     <packaging>pom</packaging>
 
