@@ -10,6 +10,9 @@
     <modules>
         <module>ai-mcp</module>
         <module>ai-vector-db</module>
+        <module>ai-start</module>
+        <module>ai-common</module>
+        <module>ai-rag</module>
     </modules>
     <packaging>pom</packaging>
 

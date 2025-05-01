@@ -1,5 +1,4 @@
-package com.example.ai.mcp;
-
+package com.example.ai;
 
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -11,10 +10,10 @@ import org.springframework.context.annotation.Bean;
 import com.example.ai.mcp.service.WeatherService;
 
 @SpringBootApplication
-public class McpServerApplication {
-
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(McpServerApplication.class, args);
+        SpringApplication.run(Application.class, args);
+
     }
 
     @Bean
@@ -32,5 +31,4 @@ public class McpServerApplication {
                 .description("Put the text to upper case")
                 .build();
     }
-
 }
