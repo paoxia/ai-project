@@ -13,6 +13,7 @@
         <module>ai-start</module>
         <module>ai-common</module>
         <module>ai-rag</module>
+        <module>ai-model</module>
     </modules>
     <packaging>pom</packaging>
 

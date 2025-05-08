@@ -1,16 +1,13 @@
 #!/bin/bash
 
-echo "正在查找占用 8080 端口的进程..."
+#!/bin/bash
 
-PIDS=$(lsof -t -i:8080)
+PORT=8080
+PID=$(lsof -t -i:$PORT)
 
-if [ -z "$PIDS" ]; then
-    echo "没有发现占用 8080 端口的进程。"
+if [ -n "$PID" ]; then
+    echo "Killing process on port $PORT (PID: $PID)"
+    kill -9 $PID
 else
-    echo "发现以下进程占用 8080 端口: $PIDS"
-    echo "尝试终止进程..."
-    for PID in $PIDS; do
-        kill -9 $PID && echo "已终止 PID: $PID"
-    done
-    echo "所有占用 8080 的进程已终止。"
+    echo "No process found on port $PORT"
 fi
