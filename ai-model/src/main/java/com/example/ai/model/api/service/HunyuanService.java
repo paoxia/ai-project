@@ -1,4 +1,4 @@
-package com.example.model.api.service;
+package com.example.ai.model.api.service;
 
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
@@ -19,26 +19,33 @@ import com.tencentcloudapi.hunyuan.v20230901.models.Message;
 @Service
 public class HunyuanService {
 
+    public final static String REGION = "ap-guangzhou";
+    public final static String MODEL = "hunyuan-standard";
+    public final static String ROLE = "user";
+    public final static String ENV_SECRET_ID = "TENCENTCLOUD_SECRET_ID";
+    public final static String ENV_SECRET_KEY = "TENCENTCLOUD_SECRET_KEY";
+
     /**
      * chat接口
      *
+     * @param content 输入内容
      * @return 聊天回答
      */
     public String chat(String content) {
         try {
             Credential cred = new Credential(
-                    System.getenv("TENCENTCLOUD_SECRET_ID"),
-                    System.getenv("TENCENTCLOUD_SECRET_KEY")
+                    System.getenv(ENV_SECRET_ID),
+                    System.getenv(ENV_SECRET_KEY)
             );
 
             ClientProfile clientProfile = new ClientProfile();
             clientProfile.getHttpProfile().setReadTimeout(400); // 流式接口耗时可能较长
-            HunyuanClient client = new HunyuanClient(cred, "ap-guangzhou", clientProfile);
+            HunyuanClient client = new HunyuanClient(cred, REGION, clientProfile);
 
             ChatCompletionsRequest req = new ChatCompletionsRequest();
-            req.setModel("hunyuan-standard");
+            req.setModel(MODEL);
             Message msg = new Message();
-            msg.setRole("user");
+            msg.setRole(ROLE);
             msg.setContent(content);
             req.setMessages(new Message[]{msg});
             // hunyuan ChatCompletions 同时支持 stream 和非 stream 的情况

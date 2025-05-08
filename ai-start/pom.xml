@@ -21,13 +21,21 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>ai-mcp</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>ai-vector-db</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>ai-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>ai-model</artifactId>
         </dependency>
     </dependencies>
 
