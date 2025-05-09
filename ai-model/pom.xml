@@ -22,5 +22,10 @@
             <groupId>com.tencentcloudapi</groupId>
             <artifactId>tencentcloud-sdk-java-hunyuan</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>ai-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

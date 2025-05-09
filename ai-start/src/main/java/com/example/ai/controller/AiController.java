@@ -47,6 +47,7 @@ public class AiController {
         ParamCheckUtils.checkObjNotNull(param, "参数为空");
         ParamCheckUtils.checkStrNotBlank(param.getContent(), "入参为空");
         // 调用模型
+        // todo 翻译service实现
         return CommonResult.success(hunyuanSrv.chat(param.getContent()));
     }
 }

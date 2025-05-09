@@ -1,6 +1,7 @@
 package com.example.ai.model.api.service.impl;
 
 import org.springframework.stereotype.Service;
+import com.example.ai.common.exception.BizException;
 import com.example.ai.model.api.service.HunYuanSrv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,11 +20,25 @@ import com.tencentcloudapi.hunyuan.v20230901.models.Message;
  */
 @Service
 public class HunYuanSrvImpl implements HunYuanSrv {
-
+    /**
+     * region
+     */
     public final static String REGION = "ap-guangzhou";
+    /**
+     * 算法模型
+     */
     public final static String MODEL = "hunyuan-standard";
+    /**
+     * 角色
+     */
     public final static String ROLE = "user";
+    /**
+     * 腾讯云账号secret id,可以在windows/linux/mac系统变量中设置
+     */
     public final static String ENV_SECRET_ID = "TENCENTCLOUD_SECRET_ID";
+    /**
+     * 腾讯云账号secret key,可以在windows/linux/mac系统变量中设置
+     */
     public final static String ENV_SECRET_KEY = "TENCENTCLOUD_SECRET_KEY";
 
     /**
@@ -32,6 +47,7 @@ public class HunYuanSrvImpl implements HunYuanSrv {
      * @param content 输入内容
      * @return 聊天回答
      */
+    @Override
     public String chat(String content) {
         try {
             Credential cred = new Credential(
@@ -77,17 +93,8 @@ public class HunYuanSrvImpl implements HunYuanSrv {
                 return client.ChatCompletions(req).getChoices()[0].getMessage().getContent();
             }
         } catch (TencentCloudSDKException e) {
-            e.printStackTrace();
+            throw new BizException(e);
         }
         return null;
-    }
-
-    /**
-     * 翻译
-     *
-     * @return
-     */
-    public String translate() {
-        return "";
     }
 }
