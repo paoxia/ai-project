@@ -1,6 +1,7 @@
-package com.example.ai.model.api.service;
+package com.example.ai.model.api.service.impl;
 
 import org.springframework.stereotype.Service;
+import com.example.ai.model.api.service.HunYuanSrv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tencentcloudapi.common.Credential;
@@ -17,7 +18,7 @@ import com.tencentcloudapi.hunyuan.v20230901.models.Message;
  * tencent hunyuan model
  */
 @Service
-public class HunyuanService {
+public class HunYuanSrvImpl implements HunYuanSrv {
 
     public final static String REGION = "ap-guangzhou";
     public final static String MODEL = "hunyuan-standard";
@@ -26,7 +27,7 @@ public class HunyuanService {
     public final static String ENV_SECRET_KEY = "TENCENTCLOUD_SECRET_KEY";
 
     /**
-     * chat接口
+     * chat
      *
      * @param content 输入内容
      * @return 聊天回答
