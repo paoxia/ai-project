@@ -1,7 +1,6 @@
 package com.example.ai.common.res;
 
 
-import com.example.ai.common.error.ErrorCode;
 import com.example.ai.common.error.ResultCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -55,16 +54,12 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
 
-    public static <T> CommonResult<T> failed(ErrorCode errorCode) {
-        return new CommonResult<T>(errorCode.getCode(), errorCode.getMsg(), null);
-    }
-
-    public static <T> CommonResult<T> failed(ErrorCode errorCode, String msg) {
-        return new CommonResult<T>(errorCode.getCode(), msg, null);
+    public static <T> CommonResult<T> failed(long errCode, String errMsg) {
+        return new CommonResult<T>(errCode, errMsg, null);
     }
 
     public static <T> CommonResult<T> validateFailed() {
-        return failed(ResultCode.VALIDATE_FAILED);
+        return failed(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMsg());
     }
 
     public static <T> CommonResult<T> validateFailed(String msg) {

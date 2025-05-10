@@ -2,7 +2,6 @@ package com.example.ai.common.exception;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -13,6 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.ai.common.res.CommonResult;
 
+import static com.example.ai.common.error.ResultCode.API_ERROR;
+import static com.example.ai.common.error.ResultCode.BIZ_ERROR;
+import static com.example.ai.common.error.ResultCode.VALIDATE_FAILED;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,29 +23,20 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = ApiException.class)
     public CommonResult handle(ApiException e) {
-        if (Objects.nonNull(e.getErrorCode())) {
-            return CommonResult.failed(e.getErrorCode());
-        }
-        return CommonResult.failed(e.getMessage());
+        return CommonResult.failed(API_ERROR.getCode(), e.getMessage());
     }
 
 
     @ResponseBody
     @ExceptionHandler(value = BizException.class)
     public CommonResult handle(BizException e) {
-        if (Objects.nonNull(e.getErrorCode())) {
-            return CommonResult.failed(e.getErrorCode());
-        }
-        return CommonResult.failed(e.getMessage());
+        return CommonResult.failed(BIZ_ERROR.getCode(), e.getMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = ParamException.class)
     public CommonResult handle(ParamException e) {
-        if (Objects.nonNull(e.getErrorCode())) {
-            return CommonResult.failed(e.getErrorCode());
-        }
-        return CommonResult.failed(e.getMessage());
+        return CommonResult.failed(VALIDATE_FAILED.getCode(), e.getMessage());
     }
 
     @ResponseBody

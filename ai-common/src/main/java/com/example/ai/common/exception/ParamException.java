@@ -1,12 +1,7 @@
 package com.example.ai.common.exception;
 
 
-
-import com.example.ai.common.error.ErrorCode;
-
 import lombok.Getter;
-
-import static com.example.ai.common.error.ResultCode.VALIDATE_FAILED;
 
 
 /**
@@ -14,9 +9,6 @@ import static com.example.ai.common.error.ResultCode.VALIDATE_FAILED;
  */
 @Getter
 public class ParamException extends RuntimeException {
-
-    private final ErrorCode errorCode = VALIDATE_FAILED;
-
 
     public ParamException(String message) {
         super(message);
