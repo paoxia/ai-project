@@ -1,8 +1,6 @@
 package com.example.ai.common.exception;
 
 
-
-
 import com.example.ai.common.error.ErrorCode;
 
 import lombok.Getter;
@@ -12,11 +10,9 @@ import lombok.Getter;
  */
 @Getter
 public class ApiException extends RuntimeException {
-    private ErrorCode errorCode;
 
     public ApiException(ErrorCode errorCode) {
         super(errorCode.getMsg());
-        this.errorCode = errorCode;
     }
 
     public ApiException(String message) {

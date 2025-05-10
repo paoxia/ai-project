@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 翻译入参
+ * 向量化参数
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TranslateParam {
+public class EmbeddingParam {
     /**
      * 原文
      */

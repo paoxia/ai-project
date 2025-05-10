@@ -13,7 +13,8 @@ public enum ResultCode implements ErrorCode {
     VALIDATE_FAILED(404, "参数检验失败"),
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
     FORBIDDEN(403, "没有相关权限"),
-    BIZ_ERROR(400, "业务异常");
+    BIZ_ERROR(400, "业务异常"),
+    API_ERROR(600, "调用外部接口异常");
 
     /**
      * 错误码
@@ -33,5 +34,13 @@ public enum ResultCode implements ErrorCode {
     @Override
     public String getMsg() {
         return this.msg;
+    }
+
+    public void setCode(long code) {
+        this.code = code;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

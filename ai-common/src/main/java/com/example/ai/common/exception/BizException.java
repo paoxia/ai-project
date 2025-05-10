@@ -1,12 +1,7 @@
 package com.example.ai.common.exception;
 
 
-
-import com.example.ai.common.error.ErrorCode;
-
 import lombok.Getter;
-
-import static com.example.ai.common.error.ResultCode.BIZ_ERROR;
 
 
 /**
@@ -14,10 +9,7 @@ import static com.example.ai.common.error.ResultCode.BIZ_ERROR;
  */
 @Getter
 public class BizException extends RuntimeException {
-
-    private final ErrorCode errorCode = BIZ_ERROR;
-
-
+    
     public BizException(String message) {
         super(message);
     }
