@@ -1,5 +1,6 @@
 package com.example.ai.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.ai.common.res.CommonResult;
 import com.example.ai.common.utils.ParamCheckUtils;
+import com.example.ai.model.api.dto.EmbeddingDTO;
 import com.example.ai.model.api.service.HunYuanSrv;
 import com.example.ai.param.ChatParam;
 import com.example.ai.param.EmbeddingParam;
@@ -59,7 +61,7 @@ public class HunYuanController {
      * @return 聊天返回
      */
     @PostMapping("/hunyuan/embedding")
-    public CommonResult<String> embedding(@RequestBody EmbeddingParam param) {
+    public CommonResult<List<EmbeddingDTO>> embedding(@RequestBody EmbeddingParam param) {
         // 参数校验
         ParamCheckUtils.checkObjNotNull(param, "参数为空");
         ParamCheckUtils.checkStrNotBlank(param.getContent(), "入参为空");

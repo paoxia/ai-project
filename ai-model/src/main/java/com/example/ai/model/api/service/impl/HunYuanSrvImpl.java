@@ -1,7 +1,11 @@
 package com.example.ai.model.api.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Service;
 import com.example.ai.common.exception.ApiException;
+import com.example.ai.model.api.dto.EmbeddingDTO;
 import com.example.ai.model.api.service.HunYuanSrv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +18,9 @@ import com.tencentcloudapi.hunyuan.v20230901.models.ChatCompletionsResponse;
 import com.tencentcloudapi.hunyuan.v20230901.models.ChatTranslationsRequest;
 import com.tencentcloudapi.hunyuan.v20230901.models.ChatTranslationsResponse;
 import com.tencentcloudapi.hunyuan.v20230901.models.Choice;
+import com.tencentcloudapi.hunyuan.v20230901.models.EmbeddingData;
+import com.tencentcloudapi.hunyuan.v20230901.models.GetEmbeddingRequest;
+import com.tencentcloudapi.hunyuan.v20230901.models.GetEmbeddingResponse;
 import com.tencentcloudapi.hunyuan.v20230901.models.Message;
 
 /**
@@ -147,7 +154,38 @@ public class HunYuanSrvImpl implements HunYuanSrv {
     }
 
     @Override
-    public String embedding(String content) {
-        return "";
+    public List<EmbeddingDTO> embedding(String content) {
+        try {
+            Credential cred = new Credential(
+                    System.getenv(ENV_SECRET_ID),
+                    System.getenv(ENV_SECRET_KEY)
+            );
+
+            ClientProfile clientProfile = new ClientProfile();
+            clientProfile.getHttpProfile().setReadTimeout(400); // 流式接口耗时可能较长
+            HunyuanClient client = new HunyuanClient(cred, REGION, clientProfile);
+
+            GetEmbeddingRequest req = new GetEmbeddingRequest();
+            req.setInput(content);
+
+            GetEmbeddingResponse resp = client.GetEmbedding(req);
+            if (Objects.isNull(resp) || Objects.isNull(resp.getData())) {
+                return null;
+            }
+
+            List<EmbeddingDTO> embeddingDTOList = new ArrayList<>();
+            for (EmbeddingData data : resp.getData()) {
+                embeddingDTOList.add(EmbeddingDTO.builder()
+                        .index(data.getIndex())
+                        .embedding(data.getEmbedding())
+                        .object(data.getObject())
+                        .build());
+            }
+            return embeddingDTOList;
+
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+
     }
 }
