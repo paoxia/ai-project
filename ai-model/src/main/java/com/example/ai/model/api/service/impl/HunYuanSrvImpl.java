@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.SSEResponseModel;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.hunyuan.v20230901.HunyuanClient;
 import com.tencentcloudapi.hunyuan.v20230901.models.ChatCompletionsRequest;
@@ -46,6 +47,12 @@ public class HunYuanSrvImpl implements HunYuanSrv {
      */
     public final static String ENV_SECRET_KEY = "TENCENTCLOUD_SECRET_KEY";
 
+    /**
+     * chat
+     *
+     * @param content 输入内容
+     * @return 聊天回答
+     */
     @Override
     public String chat(String content) {
         try {
