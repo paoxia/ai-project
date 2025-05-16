@@ -1,4 +1,4 @@
-package com.example.ai.vectordb.dao;
+package com.example.ai.infra.vectordb;
 
 import org.springframework.stereotype.Service;
 
