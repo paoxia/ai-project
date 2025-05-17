@@ -9,12 +9,10 @@
     <description>Demo ai-project project for Spring Boot</description>
     <modules>
         <module>ai-mcp</module>
-        <module>ai-vector-db</module>
         <module>ai-start</module>
         <module>ai-common</module>
         <module>ai-rag</module>
         <module>ai-model</module>
-        <module>infra</module>
         <module>ai-infra</module>
     </modules>
     <packaging>pom</packaging>
