@@ -10,6 +10,6 @@ mvn clean package
 docker build -t ai-project .
 
 # run container use image
-docker run -p 20080:8080 ai-project
+docker run --name ai-project -p 20080:8080 ai-project 
 
 ```
