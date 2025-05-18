@@ -1,7 +1,7 @@
-package com.example.ai.model.api.service;
+package com.example.ai.infra.model.service;
 
 import java.util.List;
-import com.example.ai.model.api.dto.EmbeddingDTO;
+import com.example.ai.infra.model.dto.EmbeddingDTO;
 
 public interface HunYuanSrv {
 

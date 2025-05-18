@@ -1,12 +1,12 @@
-package com.example.ai.model.api.service.impl;
+package com.example.ai.infra.model.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
 import com.example.ai.common.exception.ApiException;
-import com.example.ai.model.api.dto.EmbeddingDTO;
-import com.example.ai.model.api.service.HunYuanSrv;
+import com.example.ai.infra.model.dto.EmbeddingDTO;
+import com.example.ai.infra.model.service.HunYuanSrv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tencentcloudapi.common.Credential;

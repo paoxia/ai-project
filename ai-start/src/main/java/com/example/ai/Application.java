@@ -7,7 +7,8 @@ import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.example.ai.mcp.service.WeatherService;
+import com.example.ai.infra.mcp.service.WeatherService;
+
 
 @SpringBootApplication
 public class Application {

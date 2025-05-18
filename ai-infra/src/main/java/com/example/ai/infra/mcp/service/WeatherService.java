@@ -1,4 +1,4 @@
-package com.example.ai.mcp.service;
+package com.example.ai.infra.mcp.service;
 
 import java.util.List;
 import java.util.Map;

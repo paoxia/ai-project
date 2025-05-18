@@ -18,11 +18,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>ai-mcp</artifactId>
-        </dependency>
-
 
         <dependency>
             <groupId>com.example</groupId>
@@ -31,7 +26,12 @@
 
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>ai-model</artifactId>
+            <artifactId>ai-infra</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

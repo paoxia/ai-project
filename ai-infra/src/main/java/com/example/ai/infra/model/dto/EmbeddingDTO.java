@@ -1,4 +1,4 @@
-package com.example.ai.model.api.dto;
+package com.example.ai.infra.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

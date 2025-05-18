@@ -8,11 +8,8 @@
     <name>ai-project</name>
     <description>Demo ai-project project for Spring Boot</description>
     <modules>
-        <module>ai-mcp</module>
         <module>ai-start</module>
         <module>ai-common</module>
-        <module>ai-rag</module>
-        <module>ai-model</module>
         <module>ai-infra</module>
     </modules>
     <packaging>pom</packaging>
@@ -55,17 +52,6 @@
                 <version>3.12.0</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>ai-mcp</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>ai-vector-db</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.example</groupId>
@@ -75,7 +61,7 @@
 
             <dependency>
                 <groupId>com.example</groupId>
-                <artifactId>ai-model</artifactId>
+                <artifactId>ai-infra</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
