@@ -23,3 +23,22 @@ docker-compose up -d
 # http://localhost:25601/app/dev_tools#/console
 
 ```
+
+## RAG
+
+```
+PUT /rag-index
+{
+  "mappings": {
+    "properties": {
+      "content": {
+        "type": "text"
+      },
+      "vector": {
+        "type": "dense_vector",
+        "dims": 1024
+      }
+    }
+  }
+}
+```
