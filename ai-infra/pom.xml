@@ -32,6 +32,11 @@
             <groupId>com.example</groupId>
             <artifactId>ai-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
