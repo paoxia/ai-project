@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.ai.common.res.CommonResult;
 import com.example.ai.common.utils.ParamCheckUtils;
 import com.example.ai.infra.model.dto.EmbeddingDTO;
+import com.example.ai.infra.model.param.ChatParam;
+import com.example.ai.infra.model.param.EmbeddingParam;
+import com.example.ai.infra.model.param.TranslateParam;
 import com.example.ai.infra.model.service.HunYuanSrv;
-import com.example.ai.param.ChatParam;
-import com.example.ai.param.EmbeddingParam;
-import com.example.ai.param.TranslateParam;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -1,4 +1,4 @@
-package com.example.ai.param;
+package com.example.ai.infra.model.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.example.ai.param;
+package com.example.ai.infra.model.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,15 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 聊天参数
+ * 向量化参数
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatParam {
+public class EmbeddingParam {
     /**
-     * 提问内容
+     * 原文
      */
     private String content;
 }
