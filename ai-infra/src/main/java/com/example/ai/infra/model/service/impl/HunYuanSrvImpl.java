@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import com.example.ai.common.exception.ApiException;
 import com.example.ai.infra.model.dto.EmbeddingDTO;
-import com.example.ai.infra.model.service.HunYuanSrv;
+import com.example.ai.infra.model.service.LlmSrv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tencentcloudapi.common.Credential;
@@ -27,7 +27,7 @@ import com.tencentcloudapi.hunyuan.v20230901.models.Message;
  * tencent hunyuan model
  */
 @Service
-public class HunYuanSrvImpl implements HunYuanSrv {
+public class HunYuanSrvImpl implements LlmSrv {
     /**
      * region
      */

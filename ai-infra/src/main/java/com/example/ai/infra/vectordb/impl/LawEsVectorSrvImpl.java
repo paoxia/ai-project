@@ -1,26 +1,28 @@
-package com.example.ai.infra.vectordb;
+package com.example.ai.infra.vectordb.impl;
 
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ai.infra.vectordb.EsVectorSrv;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 
 /**
- *
+ * 向量服务
  */
-public class EsVectorServiceImpl {
+public class LawEsVectorSrvImpl implements EsVectorSrv {
 
     @Autowired
     private ElasticsearchClient elasticsearchClient;
 
+    @Override
     public Boolean insert() {
         // todo implement it
         return false;
     }
 
-
-    public List<String> search() {
+    @Override
+    public List<String> search(Float[] vector) {
         // todo implement it
         return Collections.EMPTY_LIST;
     }
