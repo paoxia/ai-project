@@ -68,8 +68,10 @@ public class LawRagSrvImpl implements RagSrv {
                 }
             }
             logger.info("查询到以下法律文件{}", JsonUtils.toJsonString(fileNames));
+            // todo 进行切分chunk保存
 
-            // esVectorSrv.insert()
+            // todo esVectorSrv.insert()
+
 
         } catch (IOException e) {
             logger.error("查询资源文件失败", e);
