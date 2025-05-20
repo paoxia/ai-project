@@ -1,5 +1,9 @@
 # ai-project
 
+## 简介
+
+- 法律文件来源:https://github.com/LawRefBook/Laws
+
 ## 构建
 
 ```bash

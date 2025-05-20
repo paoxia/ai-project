@@ -26,7 +26,7 @@ import com.tencentcloudapi.hunyuan.v20230901.models.Message;
 /**
  * tencent hunyuan model
  */
-@Service
+@Service("hunyuanSrv")
 public class HunYuanSrvImpl implements LlmSrv {
     /**
      * region

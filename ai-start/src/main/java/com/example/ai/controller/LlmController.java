@@ -2,6 +2,7 @@ package com.example.ai.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class LlmController {
 
     @Autowired
+    @Qualifier("hunyuanSrv")
     private LlmSrv llmSrv;
 
     /**

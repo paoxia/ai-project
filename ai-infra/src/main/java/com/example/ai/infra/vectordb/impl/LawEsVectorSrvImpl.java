@@ -3,6 +3,7 @@ package com.example.ai.infra.vectordb.impl;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.example.ai.infra.vectordb.EsVectorSrv;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
@@ -10,6 +11,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 /**
  * 向量服务
  */
+@Service("lawEsVectorSrv")
 public class LawEsVectorSrvImpl implements EsVectorSrv {
 
     @Autowired

@@ -2,7 +2,9 @@ package com.example.ai.infra.vectordb;
 
 import java.util.List;
 
-// todo 抽象成公共接口
+/**
+ * ES向量库索引
+ */
 public interface EsVectorSrv {
 
     /**
@@ -12,5 +14,11 @@ public interface EsVectorSrv {
      */
     Boolean insert();
 
+    /**
+     * 查询向量
+     *
+     * @param vector 向量
+     * @return 相关语句
+     */
     List<String> search(Float[] vector);
 }
