@@ -51,7 +51,49 @@ public class LawRagSrvImpl implements RagSrv {
     private final static String INDEX = "rag-law-index";
 
     @Override
-    public String query(String queryContent) {
+    public List<String> query(String queryContent) {
+        // 将查询向量化
+        List<EmbeddingDTO> embeddingDTOList = llmSrv.embedding(queryContent);
+
+        if (CollectionUtils.isEmpty(embeddingDTOList)) {
+            throw new BizException("embedding失败");
+        }
+        EmbeddingDTO embeddingDTO = embeddingDTOList.get(0);
+        Float[] queryVector = embeddingDTO.getEmbedding();
+
+        try {
+            // 查询ES向量库获取相关文案
+            SearchResponse<LawES> response = esClient.search(s -> s
+                            .index(INDEX)
+                            .knn(knn -> knn
+                                    .field("vector")
+                                    .queryVector(Arrays.stream(queryVector)
+                                            .toList())
+                                    .k(3)
+                                    .numCandidates(100)
+                            ),
+                    LawES.class
+            );
+
+            if (response == null || response.hits() == null || response.hits().hits() == null) {
+                return null;
+            }
+            List<String> content = new ArrayList<>();
+            for (Hit<LawES> hit : response.hits().hits()) {
+                if (hit.source() != null && StringUtils.isNotBlank(hit.source().getContent())) {
+                    content.add(hit.source().getContent());
+                }
+            }
+            return content;
+        } catch (Exception e) {
+            logger.error("查询知识库失败", e);
+        }
+
+        return null;
+    }
+
+    @Override
+    public String chat(String queryContent) {
         // 将查询向量化
         List<EmbeddingDTO> embeddingDTOList = llmSrv.embedding(queryContent);
 

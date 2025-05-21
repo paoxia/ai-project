@@ -1,5 +1,6 @@
 package com.example.ai.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class RagController {
     private final static String LAW_PATH = "lawbook";
 
     /**
-     * 大模型聊天
+     * 法律大模型
      *
      * @param param 聊天入参
      * @return 聊天返回
@@ -39,10 +40,29 @@ public class RagController {
         ParamCheckUtils.checkObjNotNull(param, "参数为空");
         ParamCheckUtils.checkStrNotBlank(param.getQueryContent(), "查询问题为空");
         // 调用模型
+        return CommonResult.success(ragSrv.chat(param.getQueryContent()));
+    }
+
+    /**
+     * 法律大模型
+     *
+     * @param param 聊天入参
+     * @return 聊天返回
+     */
+    @PostMapping("/law/query")
+    public CommonResult<List<String>> ragQuery(@RequestBody RagQueryParam param) {
+        // 参数校验
+        ParamCheckUtils.checkObjNotNull(param, "参数为空");
+        ParamCheckUtils.checkStrNotBlank(param.getQueryContent(), "查询问题为空");
+        // 调用模型
         return CommonResult.success(ragSrv.query(param.getQueryContent()));
     }
 
-
+    /**
+     * 构建法律知识库
+     *
+     * @return 是否成功
+     */
     @PostMapping("/law/buildKnowLedge")
     public CommonResult buildKnowLedge() {
         // 调用构建知识库
