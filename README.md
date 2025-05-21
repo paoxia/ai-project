@@ -31,7 +31,7 @@ docker-compose up -d
 ## RAG
 
 ```
-PUT /rag-index
+PUT /rag-law-index
 {
   "mappings": {
     "properties": {
