@@ -8,12 +8,9 @@
     <name>ai-project</name>
     <description>Demo ai-project project for Spring Boot</description>
     <modules>
-        <module>ai-mcp</module>
-        <module>ai-vector-db</module>
         <module>ai-start</module>
         <module>ai-common</module>
-        <module>ai-rag</module>
-        <module>ai-model</module>
+        <module>ai-infra</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -56,15 +53,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>ai-mcp</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>ai-vector-db</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.4</version>
             </dependency>
 
             <dependency>
@@ -75,8 +66,21 @@
 
             <dependency>
                 <groupId>com.example</groupId>
-                <artifactId>ai-model</artifactId>
+                <artifactId>ai-infra</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
+                <version>8.11.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-client</artifactId>
+                <version>11.0.15</version>
             </dependency>
 
         </dependencies>
