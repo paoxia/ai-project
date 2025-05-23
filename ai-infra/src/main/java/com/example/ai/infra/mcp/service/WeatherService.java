@@ -121,10 +121,4 @@ public class WeatherService {
                 .collect(Collectors.joining("\n"));
     }
 
-    public static void main(String[] args) {
-        WeatherService client = new WeatherService();
-        System.out.println(client.getWeatherForecastByLocation(47.6062, -122.3321));
-        System.out.println(client.getAlerts("NY"));
-    }
-
 }

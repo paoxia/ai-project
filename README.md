@@ -3,6 +3,8 @@
 ## 简介
 
 - 法律文件来源:https://github.com/LawRefBook/Laws
+- 接入腾讯混元大模型
+
 
 ## 构建
 
@@ -22,7 +24,7 @@ docker run --name ai-project-service -p 20080:8080 ai-project
 
 ```bash
 docker-compose up -d
-
+# ES启动失败的话可能是容量不够了，可以调小，"ES_JAVA_OPTS=-Xms1g -Xmx1g"
 # kibana console
 # http://localhost:25601/
 
