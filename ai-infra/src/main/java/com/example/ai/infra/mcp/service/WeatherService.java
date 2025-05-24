@@ -1,124 +1,85 @@
 package com.example.ai.infra.mcp.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.client.RestTemplate;
+import com.example.ai.infra.mcp.constant.StatusConstant;
+import com.example.ai.infra.mcp.dto.GeoCodeDTO;
+import com.example.ai.infra.mcp.dto.GeoCodeRespDTO;
+import com.example.ai.infra.mcp.dto.WeatherDTO;
+import com.example.ai.infra.mcp.dto.WeatherRespDTO;
 
 @Service
 public class WeatherService {
 
-
-    private static final String BASE_URL = "https://api.weather.gov";
-
-    private final RestClient restClient;
-
-    public WeatherService() {
-
-        this.restClient = RestClient.builder()
-                .baseUrl(BASE_URL)
-                .defaultHeader("Accept", "application/geo+json")
-                .defaultHeader("User-Agent", "WeatherApiClient/1.0 (your@email.com)")
-                .build();
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Points(@JsonProperty("properties") Props properties) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Props(@JsonProperty("forecast") String forecast) {
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Forecast(@JsonProperty("properties") Props properties) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Props(@JsonProperty("periods") List<Period> periods) {
-        }
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Period(@JsonProperty("number") Integer number, @JsonProperty("name") String name,
-                             @JsonProperty("startTime") String startTime, @JsonProperty("endTime") String endTime,
-                             @JsonProperty("isDaytime") Boolean isDayTime,
-                             @JsonProperty("temperature") Integer temperature,
-                             @JsonProperty("temperatureUnit") String temperatureUnit,
-                             @JsonProperty("temperatureTrend") String temperatureTrend,
-                             @JsonProperty("probabilityOfPrecipitation") Map probabilityOfPrecipitation,
-                             @JsonProperty("windSpeed") String windSpeed,
-                             @JsonProperty("windDirection") String windDirection,
-                             @JsonProperty("icon") String icon, @JsonProperty("shortForecast") String shortForecast,
-                             @JsonProperty("detailedForecast") String detailedForecast) {
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Alert(@JsonProperty("features") List<Feature> features) {
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Feature(@JsonProperty("properties") Properties properties) {
-        }
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Properties(@JsonProperty("event") String event, @JsonProperty("areaDesc") String areaDesc,
-                                 @JsonProperty("severity") String severity,
-                                 @JsonProperty("description") String description,
-                                 @JsonProperty("instruction") String instruction) {
-        }
-    }
+    /**
+     * http调用模板
+     */
+    private final RestTemplate restTemplate = new RestTemplate();
 
     /**
-     * Get forecast for a specific latitude/longitude
-     *
-     * @param latitude  Latitude
-     * @param longitude Longitude
-     * @return The forecast for the given location
-     * @throws RestClientException if the request fails
+     * 高德API KEY
      */
-    @Tool(description = "Get weather forecast for a specific latitude/longitude")
-    public String getWeatherForecastByLocation(double latitude, double longitude) {
-
-        var points = restClient.get()
-                .uri("/points/{latitude},{longitude}", latitude, longitude)
-                .retrieve()
-                .body(Points.class);
-
-        var forecast = restClient.get().uri(points.properties().forecast()).retrieve().body(Forecast.class);
-
-        return forecast.properties().periods().stream().map(p -> String.format("""
-                        %s:
-                        Temperature: %s %s
-                        Wind: %s %s
-                        Forecast: %s
-                        """, p.name(), p.temperature(), p.temperatureUnit(), p.windSpeed(), p.windDirection(),
-                p.detailedForecast())).collect(Collectors.joining());
-    }
+    private final static String AMAP_API_KEY = System.getenv("AMAP_API_KEY");
 
     /**
-     * Get alerts for a specific area
-     *
-     * @param state Area code. Two-letter US state code (e.g. CA, NY)
-     * @return Human readable alert information
-     * @throws RestClientException if the request fails
+     * 高德地理API
      */
-    @Tool(description = "Get weather alerts for a US state. Input is Two-letter US state code (e.g. CA, NY)")
-    public String getAlerts(String state) {
-        Alert alert = restClient.get().uri("/alerts/active/area/{state}", state).retrieve().body(Alert.class);
+    private final static String AMAP_GEO_CODE_API = "https://restapi.amap.com/v3/geocode/geo?address=%s&key=%s";
 
-        return alert.features()
-                .stream()
-                .map(f -> String.format("""
-                                Event: %s
-                                Area: %s
-                                Severity: %s
-                                Description: %s
-                                Instructions: %s
-                                """, f.properties().event(), f.properties.areaDesc(), f.properties.severity(),
-                        f.properties.description(), f.properties.instruction()))
-                .collect(Collectors.joining("\n"));
+    /**
+     * 高德天气API
+     */
+    private final static String AMAP_WEATHER_API = "https://restapi.amap.com/v3/weather/weatherInfo?city=%s&key=%s";
+
+    /**
+     * 天气结果
+     */
+    private final static String WEATHER_RESULT = "今天%s的天气是%s";
+
+    /**
+     * 根据地址获取城市天气
+     *
+     * @param address 地址
+     * @return 城市的天气
+     */
+    @Tool(description = "给定城市的天气预报")
+    public String getCityWeatherForecast(String address) {
+        // 查询地址对应的id
+        String getGeoCodeUrl = String.format(AMAP_GEO_CODE_API, address, AMAP_API_KEY);
+        GeoCodeRespDTO geoCodeRespDTO = restTemplate.getForObject(getGeoCodeUrl, GeoCodeRespDTO.class);
+        if (Objects.isNull(geoCodeRespDTO) ||
+                StringUtils.equals(StatusConstant.STATUS_FAIL, geoCodeRespDTO.getStatus())) {
+            return StatusConstant.STATUS_FAIL_DESC;
+        }
+
+        if (CollectionUtils.isEmpty(geoCodeRespDTO.getGeoCodes())) {
+            return StatusConstant.STATUS_FAIL_DESC;
+        }
+
+        GeoCodeDTO geoCodeDTO = geoCodeRespDTO.getGeoCodes().get(0);
+
+        // 获取具体城市的编码
+        String adCode = geoCodeDTO.getAdCode();
+        // 获取天气
+        String url = String.format(AMAP_WEATHER_API, adCode, AMAP_API_KEY);
+        WeatherRespDTO weatherRespDTO = restTemplate.getForObject(url, WeatherRespDTO.class);
+        if (Objects.isNull(weatherRespDTO) ||
+                StringUtils.equals(StatusConstant.STATUS_FAIL, geoCodeRespDTO.getStatus())) {
+            return StatusConstant.STATUS_FAIL_DESC;
+        }
+
+        if (CollectionUtils.isEmpty(weatherRespDTO.getLives())) {
+            return StatusConstant.STATUS_FAIL_DESC;
+        }
+
+        WeatherDTO weatherDTO = weatherRespDTO.getLives().get(0);
+
+        return String.format(WEATHER_RESULT, weatherDTO.getCity(), weatherDTO.getWeather());
     }
+
 
 }
